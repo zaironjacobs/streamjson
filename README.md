@@ -1,5 +1,9 @@
 StreamJSON
 =================
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/streamjson?color=blue)](https://pypi.python.org/pypi/streamjson)
+[![PyPI](https://img.shields.io/pypi/v/streamjson?color=blue)](https://pypi.python.org/pypi/streamjson)
+[![PyPI - Status](https://img.shields.io/pypi/status/streamjson)](https://pypi.python.org/pypi/streamjson)
+[![PyPI - License](https://img.shields.io/pypi/l/streamjson)](https://pypi.python.org/pypi/streamjson)
 
 Send objects or arrays to a JSON file using a stream. Useful for when you don't want to read large amounts of data in
 memory, for example when you need to save large amounts of data from a database to a single JSON file.
@@ -20,7 +24,7 @@ $ pip install streamjson --upgrade
 
 #### Usage
 
-Fetch data from a database or anywhere else and send to JSON file. The send function takes in a dictionary or a list.
+Fetch data from a database or anywhere else and send to a JSON file. The send function takes in a dictionary or a list.
 The root of the JSON file is an array by default.
 
 ```Python

@@ -10,8 +10,8 @@ class StreamJSONWriter:
         Send objects or arrays to a JSON file using a stream. Useful for when you don't want to read large amounts of
         data in memory, for example when you need to save large amounts of data from a database to a single JSON file.
 
-        :param name: The file name
-        :param indent: Spaces to use at beginning of line
+        :param name: The file
+        :param indent: Spaces to use at the beginning of line
         """
 
         if name == '':
@@ -28,15 +28,15 @@ class StreamJSONWriter:
 
     def send(self, value):
         """
-        Call the writer and send the value to write
+        Send value to file
 
-        :param value: The value to send to the writer
+        :param value: The value to send to the file
         """
 
         self.__writer.send(value)
 
     def close(self):
-        """ Call the writer and close the file """
+        """ Close the writer """
 
         self.__writer.close()
 
@@ -44,18 +44,17 @@ class StreamJSONWriter:
         self.__writer.close()
 
     class Writer:
-        def __init__(self, name: str, indent: int):
-            self.__name = name
+        def __init__(self, file: str, indent: int):
+            self.__file = file
             self.__indent = indent
             self.__stream_started = False
-            self.__file = None
+            self.__opened_file = None
 
         def send(self, value):
             """
             Send value to file
-            Value can be a dictionary or a list containing dictionaries
 
-            :param value: The value to write to file
+            :param value: The value to send to the file
             """
 
             self.__send(value)
@@ -64,44 +63,31 @@ class StreamJSONWriter:
             """
             Send value to file
 
-            :param value: The value to write to file
+            :param value: The value to send to the file
             """
 
             if not self.__stream_started:
                 # Remove the file before writing to it
-                if os.path.exists(self.__name):
-                    os.remove(self.__name)
+                if os.path.exists(self.__file):
+                    os.remove(self.__file)
 
                 # Open the file
-                self.__file = open(self.__name, 'a')
+                self.__opened_file = open(self.__file, 'a')
 
                 # Add opening bracket at first write
-                self.__file.write(f'[')
+                self.__opened_file.write(f'[')
 
                 self.__stream_started = True
 
             json_value = json.dumps(json.loads(json.dumps(value)), indent=self.__indent)
             json_value_indented = self.__indent_string(json_value)
-            self.__file.write(f'\n{json_value_indented},')
+            self.__opened_file.write(f'\n{json_value_indented},')
 
-        def close(self):
-            """ Close the writer """
-
-            if self.__stream_started:
-                # Remove last comma
-                self.__remove_last_comma(self.__file)
-
-                # Add the closing bracket
-                self.__file.write('\n]')
-
-                # Close the file
-                self.__file.close()
-
-        def __indent_string(self, value) -> str:
+        def __indent_string(self, string) -> str:
             """
             Indent a string
 
-            :param value: String to indent
+            :param string: String to indent
             :return: The indented string
             """
 
@@ -114,7 +100,7 @@ class StreamJSONWriter:
                 return indent_string
 
             indent = get_indent()
-            return indent + value.replace('\n', '\n' + indent)
+            return indent + string.replace('\n', '\n' + indent)
 
         def __remove_last_comma(self, file):
             """
@@ -125,3 +111,16 @@ class StreamJSONWriter:
 
             file.seek(file.tell() - 1, os.SEEK_SET)
             file.truncate()
+
+        def close(self):
+            """ Close the writer """
+
+            if self.__stream_started and self.__opened_file:
+                # Remove last comma
+                self.__remove_last_comma(self.__opened_file)
+
+                # Add the closing bracket
+                self.__opened_file.write('\n]')
+
+                # Close the file
+                self.__opened_file.close()
