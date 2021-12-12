@@ -14,13 +14,8 @@ class StreamJSONWriter:
         :param indent: Spaces to use at the beginning of line
         """
 
-        if name == '':
-            raise StreamJSONError('No file name provided.')
-        if indent < 0:
-            raise StreamJSONError('Indent cannot be lower than 0.')
-
         self.__name = name
-        self.__indent = indent
+        self.__indent = indent if indent >= 0 else 0
 
     def __enter__(self):
         self.__writer = self.Writer(self.__name, self.__indent)
@@ -67,6 +62,8 @@ class StreamJSONWriter:
             """
 
             if not self.__stream_started:
+                self.__stream_started = True
+
                 # Remove the file before writing to it
                 if os.path.exists(self.__file):
                     os.remove(self.__file)
@@ -75,12 +72,14 @@ class StreamJSONWriter:
                 self.__opened_file = open(self.__file, 'a')
 
                 # Add opening bracket at first write
-                self.__opened_file.write(f'[')
+                self.__opened_file.write('[')
 
-                self.__stream_started = True
-
+            # Create JSON string from value
             json_value = json.dumps(json.loads(json.dumps(value)), indent=self.__indent)
+
+            # Indent the whole value
             json_value_indented = self.__indent_string(json_value)
+
             self.__opened_file.write(f'\n{json_value_indented},')
 
         def __indent_string(self, string) -> str:
