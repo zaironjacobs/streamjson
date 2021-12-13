@@ -25,7 +25,7 @@ $ pip install streamjson --upgrade
 #### Usage
 
 Fetch data from a database or anywhere else and send to a JSON file. The send function takes in a dictionary or a list.
-The root of the JSON file is an array by default.
+A new file with the given name will be created, the root of the JSON file is an array by default.
 
 ```Python
 from streamjson import StreamJSONWriter
