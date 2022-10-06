@@ -12,7 +12,7 @@ class StreamJSONWriter:
 
         :param name: The file
         :param indent: Spaces to use at the beginning of line
-        :param ensure_ascii: ascii-only json output (replace non-ascii to \uNNNN), True by default
+        :param ensure_ascii: ascii-only json output (replace non-ascii to \ uNNNN), True by default
         """
 
         self.__name = name
