@@ -5,20 +5,22 @@ from .exceptions import StreamJSONError
 
 
 class StreamJSONWriter:
-    def __init__(self, name: str, indent: int = 2):
+    def __init__(self, name: str, indent: int = 2, ensure_ascii: bool = True):
         """
         Send objects or arrays to a JSON file using a stream. Useful for when you don't want to read large amounts of
         data in memory, for example when you need to save large amounts of data from a database to a single JSON file.
 
         :param name: The file
         :param indent: Spaces to use at the beginning of line
+        :param ensure_ascii: ascii-only json output (replace non-ascii to \ uNNNN), True by default
         """
 
         self.__name = name
         self.__indent = indent if indent >= 0 else 0
+        self.__ensure_ascii = ensure_ascii
 
     def __enter__(self):
-        self.__writer = self.Writer(self.__name, self.__indent)
+        self.__writer = self.Writer(self.__name, self.__indent, self.__ensure_ascii)
         return self.__writer
 
     def send(self, value):
@@ -39,11 +41,12 @@ class StreamJSONWriter:
         self.__writer.close()
 
     class Writer:
-        def __init__(self, file: str, indent: int):
+        def __init__(self, file: str, indent: int, ensure_ascii: bool):
             self.__file = file
             self.__indent = indent
             self.__stream_started = False
             self.__opened_file = None
+            self.__ensure_ascii = ensure_ascii
 
         def send(self, value):
             """
@@ -75,7 +78,13 @@ class StreamJSONWriter:
                 self.__opened_file.write('[')
 
             # Create JSON string from value
-            json_value = json.dumps(json.loads(json.dumps(value)), indent=self.__indent)
+            json_value = json.dumps(
+                json.loads(
+                    json.dumps(value, ensure_ascii=self.__ensure_ascii)
+                ),
+                indent=self.__indent,
+                ensure_ascii=self.__ensure_ascii
+            )
 
             # Indent the whole value
             json_value_indented = self.__indent_string(json_value)
