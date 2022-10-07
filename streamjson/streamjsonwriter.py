@@ -1,8 +1,6 @@
 import os
 import json
 
-from .exceptions import StreamJSONError
-
 
 class StreamJSONWriter:
     def __init__(self, name: str, indent: int = 2, ensure_ascii: bool = True):

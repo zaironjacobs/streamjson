@@ -13,13 +13,13 @@ memory, for example when you need to save large amounts of data from a database 
 To install:
 
 ```console
-$ pip install streamjson
+pip install streamjson
 ```
 
 To upgrade:
 
 ```console
-$ pip install streamjson --upgrade
+pip install streamjson --upgrade
 ```
 
 #### Usage
