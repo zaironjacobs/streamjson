@@ -5,8 +5,10 @@ StreamJSON
 [![PyPI - Status](https://img.shields.io/pypi/status/streamjson)](https://pypi.python.org/pypi/streamjson)
 [![PyPI - License](https://img.shields.io/pypi/l/streamjson)](https://pypi.python.org/pypi/streamjson)
 
-Send objects or arrays to a JSON file using a stream. Useful for when you don't want to read large amounts of data in
+Write objects or arrays to a JSON file using a stream. Useful for when you don't want to read large amounts of data in
 memory, for example when you need to save large amounts of data from a database to a single JSON file.
+
+Read objects from a JSON file using a stream. Does not require loading the whole JSON file in memory.
 
 ## Install
 
@@ -22,7 +24,7 @@ To upgrade:
 pip install streamjson --upgrade
 ```
 
-#### Usage
+## How to write to JSON file
 
 Fetch data from a database or anywhere else and send to a JSON file. The send function takes in a dictionary or a list.
 A new file with the given name will be created, the root of the JSON file is an array by default.
@@ -53,4 +55,16 @@ persons.json:
     "last_name": "Doe"
   }
 ]
+```
+
+## How to read from JSON file
+
+The reader will stream each object from the JSON file.
+
+```Python
+from streamjson import StreamJSONReader
+
+with StreamJSONReader('persons.json') as reader:
+    for obj in reader.find():
+        print(obj)
 ```

@@ -2,7 +2,7 @@ from setuptools import setup
 from setuptools import find_packages
 
 name = 'streamjson'
-version = '0.0.4'
+version = '1.0.0'
 
 with open('README.md', 'r') as fh:
     long_description = fh.read()
@@ -14,11 +14,11 @@ setup(
     version=version,
     author='Zairon Jacobs',
     author_email='zaironjacobs@gmail.com',
-    description='Send objects or arrays to a JSON file using a stream.',
+    description='Send objects or arrays to a JSON file using a stream. Read objects from a JSON file using a stream.',
     long_description=long_description,
     url='https://github.com/zaironjacobs/streamjson',
     download_url=f'https://github.com/zaironjacobs/streamjson/archive/v{version}.tar.gz',
-    keywords=['json', 'stream', 'write', 'file', 'read'],
+    keywords=['json', 'stream', 'write', 'file', 'read', 'objects', 'arrays'],
     packages=find_packages(),
     install_requires=requires,
     license='MIT',

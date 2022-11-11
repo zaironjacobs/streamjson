@@ -8,8 +8,7 @@ from streamjson import StreamJSONWriter
 file = os.path.join(os.path.dirname(__file__), 'test.json')
 
 
-class TestStreamJSONWriter:
-
+class TestStreamJSON:
     def test_writer_send(self):
         persons = []
         for x in range(100):

@@ -3,43 +3,35 @@ import json
 
 
 class StreamJSONWriter:
-    def __init__(self, name: str, indent: int = 2, ensure_ascii: bool = True):
+    def __init__(self, file: str, indent: int = 2, ensure_ascii: bool = True):
         """
-        Send objects or arrays to a JSON file using a stream. Useful for when you don't want to read large amounts of
+        Write objects or arrays to a JSON file using a stream. Useful for when you don't want to read large amounts of
         data in memory, for example when you need to save large amounts of data from a database to a single JSON file.
 
-        :param name: The file
+        :param file: The file
         :param indent: Spaces to use at the beginning of line
         :param ensure_ascii: ascii-only json output (replace non-ascii to \\uNNNN), True by default
         """
 
-        self.__name = name
+        self.__file = file
         self.__indent = indent if indent >= 0 else 0
         self.__ensure_ascii = ensure_ascii
 
     def __enter__(self):
-        self.__writer = self.Writer(self.__name, self.__indent, self.__ensure_ascii)
+        self.__writer = self.Writer(self.__file, self.__indent, self.__ensure_ascii)
         return self.__writer
-
-    def send(self, value):
-        """
-        Send value to file
-
-        :param value: The value to send to the file
-        """
-
-        self.__writer.send(value)
-
-    def close(self):
-        """ Close the writer """
-
-        self.__writer.close()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.__writer.close()
 
     class Writer:
         def __init__(self, file: str, indent: int, ensure_ascii: bool):
+            """
+            :param file: The file
+            :param indent: Spaces to use at the beginning of line
+            :param ensure_ascii: ascii-only json output (replace non-ascii to \\uNNNN), True by default
+            """
+
             self.__file = file
             self.__indent = indent
             self.__stream_started = False
@@ -47,15 +39,6 @@ class StreamJSONWriter:
             self.__ensure_ascii = ensure_ascii
 
         def send(self, value):
-            """
-            Send value to file
-
-            :param value: The value to send to the file
-            """
-
-            self.__send(value)
-
-        def __send(self, value):
             """
             Send value to file
 
@@ -77,9 +60,7 @@ class StreamJSONWriter:
 
             # Create JSON string from value
             json_value = json.dumps(
-                json.loads(
-                    json.dumps(value, ensure_ascii=self.__ensure_ascii)
-                ),
+                json.loads(json.dumps(value, ensure_ascii=self.__ensure_ascii)),
                 indent=self.__indent,
                 ensure_ascii=self.__ensure_ascii
             )
