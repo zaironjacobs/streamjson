@@ -1,0 +1,28 @@
+[
+  {
+    "id": "0001",
+    "first_name": "John",
+    "last_name": "Doe",
+    "hobbies": [
+      {
+        "name": "photography"
+      },
+      {
+        "name": "programming"
+      },
+      {
+        "name": "hiking"
+      }
+    ]
+  },
+  {
+    "id": "0002",
+    "first_name": "Jane",
+    "last_name": "Doe",
+    "hobbies": [
+      {
+        "name": "dancing"
+      }
+    ]
+  }
+]

@@ -10,7 +10,7 @@ class StreamJSONReader:
 
         :param file: The file
         :param encoding: Determines the encoding
-        :param kwds
+        :param kwds: Arguments for json.loads()
         """
 
         self.__file = file
@@ -29,7 +29,7 @@ class StreamJSONReader:
             """
             :param file: The file
             :param encoding: Determines the encoding
-            :param kwds
+            :param kwds: Arguments for json.loads()
             """
 
             self.__file = file
