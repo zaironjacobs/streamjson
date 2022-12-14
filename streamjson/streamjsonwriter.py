@@ -53,22 +53,22 @@ class StreamJSONWriter:
                     os.remove(self.__file)
 
                 # Open the file
-                self.__opened_file = open(self.__file, 'a')
+                self.__opened_file = open(self.__file, "a")
 
                 # Add opening bracket at first write
-                self.__opened_file.write('[')
+                self.__opened_file.write("[")
 
             # Create JSON string from value
             json_value = json.dumps(
                 json.loads(json.dumps(value, ensure_ascii=self.__ensure_ascii)),
                 indent=self.__indent,
-                ensure_ascii=self.__ensure_ascii
+                ensure_ascii=self.__ensure_ascii,
             )
 
             # Indent the whole value
             json_value_indented = self.__indent_string(json_value)
 
-            self.__opened_file.write(f'\n{json_value_indented},')
+            self.__opened_file.write(f"\n{json_value_indented},")
 
         def __indent_string(self, string) -> str:
             """
@@ -79,15 +79,15 @@ class StreamJSONWriter:
             """
 
             def get_indent() -> str:
-                """ String representing the indentation """
+                """String representing the indentation"""
 
-                indent_string = ''
+                indent_string = ""
                 for x in range(self.__indent):
-                    indent_string += ' '
+                    indent_string += " "
                 return indent_string
 
             indent = get_indent()
-            return indent + string.replace('\n', '\n' + indent)
+            return indent + string.replace("\n", "\n" + indent)
 
         def __remove_last_comma(self, file):
             """
@@ -100,14 +100,14 @@ class StreamJSONWriter:
             file.truncate()
 
         def close(self):
-            """ Close the writer """
+            """Close the writer"""
 
             if self.__stream_started and self.__opened_file:
                 # Remove last comma
                 self.__remove_last_comma(self.__opened_file)
 
                 # Add the closing bracket
-                self.__opened_file.write('\n]')
+                self.__opened_file.write("\n]")
 
                 # Close the file
                 self.__opened_file.close()
