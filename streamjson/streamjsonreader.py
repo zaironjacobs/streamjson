@@ -17,10 +17,17 @@ class StreamJSONReader:
         self.__encoding = encoding
         self.__kwds = kwds
 
-    def __enter__(self):
         self.__reader = self.Reader(
             file=self.__file, encoding=self.__encoding, **self.__kwds
         )
+
+    def find(self):
+        return self.__reader.find()
+
+    def close(self):
+        self.__reader.close()
+
+    def __enter__(self):
         return self.__reader
 
     def __exit__(self, exc_type, exc_val, exc_tb):

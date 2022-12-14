@@ -1,5 +1,5 @@
-import os
 import json
+import os
 
 
 class StreamJSONWriter:
@@ -17,8 +17,15 @@ class StreamJSONWriter:
         self.__indent = indent if indent >= 0 else 0
         self.__ensure_ascii = ensure_ascii
 
-    def __enter__(self):
         self.__writer = self.Writer(self.__file, self.__indent, self.__ensure_ascii)
+
+    def send(self, value):
+        self.__writer.send(value)
+
+    def close(self):
+        self.__writer.close()
+
+    def __enter__(self):
         return self.__writer
 
     def __exit__(self, exc_type, exc_val, exc_tb):
