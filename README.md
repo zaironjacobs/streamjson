@@ -1,9 +1,10 @@
-StreamJSON
-=================
+# StreamJSON
+
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/streamjson?color=blue)](https://pypi.python.org/pypi/streamjson)
 [![PyPI](https://img.shields.io/pypi/v/streamjson?color=blue)](https://pypi.python.org/pypi/streamjson)
-[![PyPI - Status](https://img.shields.io/pypi/status/streamjson)](https://pypi.python.org/pypi/streamjson)
 [![PyPI - License](https://img.shields.io/pypi/l/streamjson)](https://pypi.python.org/pypi/streamjson)
+
+[![tests](https://github.com/zaironjacobs/streamjson/actions/workflows/test.yml/badge.svg)](https://github.com/zaironjacobs/streamjson/actions/workflows/test.yml)
 
 Write objects or arrays to a JSON file using a stream. Useful for when you don't want to read large amounts of data in
 memory, for example when you need to save large amounts of data from a database to a single JSON file.
@@ -12,16 +13,8 @@ Read objects from a JSON file using a stream. Does not require loading the whole
 
 ## Install
 
-To install:
-
 ```console
 pip install streamjson
-```
-
-To upgrade:
-
-```console
-pip install streamjson --upgrade
 ```
 
 ## How to write to JSON file
