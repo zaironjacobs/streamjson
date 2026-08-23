@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=84.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "streamjson"
+version = "1.0.3"
+description = "Send objects or arrays to a JSON file using a stream. Read objects from a JSON file using a stream."
+readme = "README.md"
+keywords = ["json", "stream", "write", "file", "read", "objects", "arrays"]
+license = "MIT"
+license-files = [
+    "LICENSE"
+]
+requires-python = ">=3.11"
+authors = [
+    { name = "Zairon Jacobs", email = "zaironjacobs@gmail.com" },
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Natural Language :: English"
+]
+dependencies = []
+
+[dependency-groups]
+test = [
+    "pytest>=9.0.3"
+]
+
+[project.urls]
+homepage = "https://github.com/zaironjacobs/streamjson"
+download = "https://github.com/zaironjacobs/streamjson/archive/v1.0.3.tar.gz"
+
+[tool.setuptools.packages.find]
+where = [""]
+namespaces = false

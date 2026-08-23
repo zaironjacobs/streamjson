@@ -1,31 +1,39 @@
 name: Tests
 
 on:
-    push:
-        branches: [ "main" ]
-        paths-ignore:
-            - '**.md'
-    pull_request:
-        branches: [ "main" ]
-        paths-ignore:
-            - '**.md'
-    workflow_dispatch:
+  push:
+    branches: [ "main" ]
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    branches: [ "main" ]
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            -   name: Checkout Code
-                uses: actions/checkout@v4
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
 
-            -   name: Install streamjson
-                run: |
-                    pip install .
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
 
-            -   name: Install test dependencies
-                run: |
-                    pip install -r requirements-test.txt
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
 
-            -   name: Run tests
-                run: |
-                    pytest tests
+      - name: Install streamjson
+        run: |
+          pip install .
+
+      - name: Install test dependencies
+        run: |
+          pip install --group test
+
+      - name: Run tests
+        run: |
+          pytest tests
